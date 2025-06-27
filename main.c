@@ -6,7 +6,7 @@
 /*   By: makpolat <makpolat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:08:42 by makpolat          #+#    #+#             */
-/*   Updated: 2025/06/27 12:39:39 by makpolat         ###   ########.fr       */
+/*   Updated: 2025/06/27 17:41:19 by makpolat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,85 +26,104 @@ size_t  ft_strlen(char *str)
 
 
 
-// void philo_start(int argc, char **argv)
-// {
-//     t_data *philo;
-//     if(argc < 5 || argc > 6)
-//         return(printf("Usage: ./philo n_philo time_to_die time_to_eat time_to_sleep [must_eat]\n"), 1);
+int philo_parse(int argc, char **argv, t_data *philo)
+{
+    if(argc < 5 || argc > 6)
+        return(printf("Usage: ./philo filozof sayısı ölme_zamanı time_to_eat time_to_sleep [must_eat]\n"), 1);
+    philo->philo_count = ft_atoi(argv[1]);
+    philo->time_to_die = ft_atoi(argv[2]);
+    philo->time_to_eat = ft_atoi(argv[3]);
+    philo->time_to_sleep = ft_atoi(argv[4]);
+    if (argc == 6)
+        philo->meal_count = ft_atoi(argv[5]);
+    else
+        philo->meal_count = -2;
 
-//     philo = (t_data *)malloc(sizeof(t_data));
-//     if (!philo)
-//         return(printf("Malloc error\n"));
+    if (philo->philo_count == -1 || philo->time_to_die == -1 || philo->time_to_eat == -1
+        || philo->time_to_sleep == -1 || philo->meal_count == -1)
+    {
+        return (1);
+    }
+    return (0);
+}
+
+int create_mutex(t_data*philo)
+{
+    int i;
+    
+    philo->forks = malloc(sizeof(pthread_mutex_t) * philo->philo_count);
+    if (!philo->forks)
+    {
+        return(printf("Malloc Error\n"), 1);
+    }
+    i = 0;
+    while (i < philo->philo_count)
+    {
+        if (pthread_mutex_init(&philo->forks[i], NULL) != 0)
+            return(printf("Mutex init error\n"), 1);
+        i++;
+    }
+    
+}
+
+void join_threads(t_data *data)
+{
+    int i = 0;
+
+    while (i < data->philo_count)
+    {
+        pthread_join(data->philos[i].thread, NULL);
+        i++;
+    }
+    
+}
+
+void *thread_function(void *arg)
+{
+    t_philo *philo = (t_philo *)arg;
+    pthread_mutex_lock(&philo->data->print_lock);
+    printf("Philosophers %d threadi başladı\n", philo->id);
+    pthread_mutex_unlock(&philo->data->print_lock);
+}
+
+
+int start_threads(t_data *data)
+{
+    int i;
+
+    data->start_time = get_time();
+    i = 0;
+    while (i < data->philo_count)
+    {
+        if (pthread_create(&data->philos[i].thread, NULL, thread_function, &data->philos[i]) != 0)
+        {
+            exit(EXIT_FAILURE);
+        }
+        i++;
         
-//     philo->philo_count = ft_atoi(argv[1]);
-//     philo->time_to_die = ft_atoi(argv[2]);
-//     philo->time_to_eat = ft_atoi(argv[3]);
-//     philo->time_to_sleep = ft_atoi(argv[4]);
-//     if (argc == 6)
-//         philo->meal_count = ft_atoi(argv[5]);
-//     else
-//         philo->meal_count = -2;
-
-//     if (philo->philo_count == -1 || philo->time_to_die == -1 || philo->time_to_eat == -1
-//         || philo->time_to_sleep == -1 || philo->meal_count == -1)
-//     {
-//         return (1);
-//     }
-// }
-
-
-
-void *thread_function()
-{
-    printf("thread 1 başladı\n");
-    usleep(100);
-    printf("thread 1 bitti\n");
-    //return (NULL);
+    }
+    return (0);
 }
-void *thread_function_two()
-{
-    //int id = *((int *)arg);
-    write(1, "thread 2 başladı\n", ft_strlen("thread 2 başladı\n"));
-    write(1, "thread 2 bitti\n", ft_strlen("thread 2 bitti\n"));
-    //printf("thread 2 bitti\n");
-    //return (NULL);
-}
-
 
 
 int main(int argc, char **argv)
 {
+    t_data *philo;
 
-    pthread_t thread;
-    pthread_t thread2;
-    int id = 1;
-    if (argv[1] == '1')
-    {
-        printf("çatalı aldı\n");
-        printf("öldü knk\n");
-        return(0);
-    }
-    
-    
-    pthread_create(&thread,NULL, thread_function,&id);
-    //usleep(10);
-    pthread_create(&thread2, NULL, thread_function_two, &id);
-    //thread_function();
-    //thread_function_two();
-    //pthread_join(thread, NULL);
-    usleep(100000);
-    printf("Main thread bitti\n");
-    return 0;
-    (void)argc;
-    (void)argv;
+    philo = (t_data *)malloc(sizeof(t_data));
+    if (!philo)
+        return(printf("Malloc error\n"), 1);
 
+    if (philo_parse(argc, argv, philo)!= 0)
+        return (1);
 
+    if(create_mutex(philo) == 1)
+        return (1);
 
-
-
-
-    
-   //philo_start(argc, argv);
-    
-
+    if (init_philosophers(philo) != 0)
+        return (1);
+    start_threads(philo);
+    join_threads(philo);
+    return (0);
 }
+    

@@ -6,7 +6,7 @@
 /*   By: makpolat <makpolat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:08:34 by makpolat          #+#    #+#             */
-/*   Updated: 2025/06/26 14:23:41 by makpolat         ###   ########.fr       */
+/*   Updated: 2025/06/27 17:19:26 by makpolat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <stdlib.h>
 # include <stdio.h>
 # include <unistd.h>
+# include <sys/time.h>
 
 
 typedef struct s_data
@@ -52,8 +53,9 @@ typedef struct s_philo
 
 } t_philo;
 
-
+long get_time(void);
 int	ft_atoi(const char *str);
+int init_philosophers(t_data *philo);
 
 
 #endif
