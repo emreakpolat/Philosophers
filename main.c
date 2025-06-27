@@ -6,23 +6,11 @@
 /*   By: makpolat <makpolat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:08:42 by makpolat          #+#    #+#             */
-/*   Updated: 2025/06/27 17:41:19 by makpolat         ###   ########.fr       */
+/*   Updated: 2025/06/27 17:45:45 by makpolat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
-
-
-size_t  ft_strlen(char *str)
-{
-    size_t  i;
-
-    i = 0;
-    while(str[i])
-        i++;
-    return (i);
-}
-
 
 
 

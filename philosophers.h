@@ -6,7 +6,7 @@
 /*   By: makpolat <makpolat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:08:34 by makpolat          #+#    #+#             */
-/*   Updated: 2025/06/27 17:19:26 by makpolat         ###   ########.fr       */
+/*   Updated: 2025/06/27 17:45:56 by makpolat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ typedef struct s_philo
 
 } t_philo;
 
+
+size_t  ft_strlen(char *str);
 long get_time(void);
 int	ft_atoi(const char *str);
 int init_philosophers(t_data *philo);

@@ -6,7 +6,7 @@
 /*   By: makpolat <makpolat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 12:33:27 by makpolat          #+#    #+#             */
-/*   Updated: 2025/06/27 17:35:47 by makpolat         ###   ########.fr       */
+/*   Updated: 2025/06/27 17:45:50 by makpolat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,20 @@ int init_philosophers(t_data *philo)
     }
     return (0);
 }
+
+
+
+size_t  ft_strlen(char *str)
+{
+    size_t  i;
+
+    i = 0;
+    while(str[i])
+        i++;
+    return (i);
+}
+
+
 
 
 static int	char_check(const char *str)
