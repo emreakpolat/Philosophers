@@ -6,7 +6,7 @@
 /*   By: makpolat <makpolat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:08:42 by makpolat          #+#    #+#             */
-/*   Updated: 2025/06/28 16:11:16 by makpolat         ###   ########.fr       */
+/*   Updated: 2025/06/28 16:34:43 by makpolat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,16 +64,6 @@ void join_threads(t_data *data)
     
 }
 
-void *thread_function(void *arg)
-{
-    t_philo *philo = (t_philo *)arg;
-    pthread_mutex_lock(&philo->data->printf_lock);
-    printf("Philosophers %d threadi başladı\n", philo->id);
-    pthread_mutex_unlock(&philo->data->printf_lock);
-    return (NULL);
-}
-
-
 int start_threads(t_data *data)
 {
     int i;
@@ -82,12 +72,11 @@ int start_threads(t_data *data)
     i = 0;
     while (i < data->philo_count)
     {
-        if (pthread_create(&data->philos[i].thread, NULL, thread_function, &data->philos[i]) != 0)
+        if (pthread_create(&data->philos[i].thread, NULL, philo_live, &data->philos[i]) != 0)
         {
-            exit(EXIT_FAILURE);
+            return(printf("Thread error\n"), 1);
         }
         i++;
-        
     }
     return (0);
 }
@@ -95,22 +84,23 @@ int start_threads(t_data *data)
 
 int main(int argc, char **argv)
 {
-    t_data *philo;
+    t_data *data;
 
-    philo = (t_data *)malloc(sizeof(t_data));
-    if (!philo)
-        return(printf("Malloc error\n"), 1);
+    data = (t_data *)malloc(sizeof(t_data));
+    if (!data)
+        return (printf("Malloc error\n"), 1);
 
-    if (philo_parse(argc, argv, philo)!= 0)
+    if (philo_parse(argc, argv, data) != 0)
         return (1);
 
-    if(create_mutex(philo) == 1)
+    if (create_mutex(data) == 1)
         return (1);
 
-    if (init_philosophers(philo) != 0)
+    if (init_philosophers(data) != 0)
         return (1);
-    start_threads(philo);
-    join_threads(philo);
+
+    start_threads(data);
+    join_threads(data);
+
     return (0);
 }
-    
