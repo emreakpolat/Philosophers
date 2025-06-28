@@ -6,7 +6,7 @@
 /*   By: makpolat <makpolat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 14:16:42 by makpolat          #+#    #+#             */
-/*   Updated: 2025/06/28 19:21:25 by makpolat         ###   ########.fr       */
+/*   Updated: 2025/06/28 19:24:27 by makpolat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void *philo_live(void *turn)
     
 }
 
-void *check_death(void *arg)
+void *check_death(void *arg) //TODO bu fonksiyonun çalışma durumu kontrol edilecek
 {
     t_philo *philo = (t_philo *)arg;
     t_data *data;
