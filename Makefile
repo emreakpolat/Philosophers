@@ -4,7 +4,7 @@ CC= cc -Wall -Wextra -Werror
 
 SRC= main.c \
 	philo_loop.c \
-	philo_utils.c
+	philo_init.c
 
 OBJS = $(SRC:.c=.o)
 

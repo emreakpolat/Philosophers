@@ -6,13 +6,11 @@
 /*   By: makpolat <makpolat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:08:42 by makpolat          #+#    #+#             */
-/*   Updated: 2025/06/28 16:07:16 by makpolat         ###   ########.fr       */
+/*   Updated: 2025/06/28 16:11:16 by makpolat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
-
-
 
 int philo_parse(int argc, char **argv, t_data *philo)
 {
