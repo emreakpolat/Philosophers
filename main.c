@@ -6,7 +6,7 @@
 /*   By: makpolat <makpolat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:08:42 by makpolat          #+#    #+#             */
-/*   Updated: 2025/06/27 17:45:45 by makpolat         ###   ########.fr       */
+/*   Updated: 2025/06/28 16:07:16 by makpolat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int create_mutex(t_data*philo)
             return(printf("Mutex init error\n"), 1);
         i++;
     }
-    
+    return (0);
 }
 
 void join_threads(t_data *data)
@@ -69,9 +69,10 @@ void join_threads(t_data *data)
 void *thread_function(void *arg)
 {
     t_philo *philo = (t_philo *)arg;
-    pthread_mutex_lock(&philo->data->print_lock);
+    pthread_mutex_lock(&philo->data->printf_lock);
     printf("Philosophers %d threadi başladı\n", philo->id);
-    pthread_mutex_unlock(&philo->data->print_lock);
+    pthread_mutex_unlock(&philo->data->printf_lock);
+    return (NULL);
 }
 
 

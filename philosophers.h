@@ -6,7 +6,7 @@
 /*   By: makpolat <makpolat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:08:34 by makpolat          #+#    #+#             */
-/*   Updated: 2025/06/27 17:45:56 by makpolat         ###   ########.fr       */
+/*   Updated: 2025/06/28 15:34:26 by makpolat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ typedef struct s_data
     int     someone_died;
 
     pthread_mutex_t *forks;
-    pthread_mutex_t print_lock;
+    pthread_mutex_t printf_lock;
 
     struct s_philo *philos;
 } t_data;
