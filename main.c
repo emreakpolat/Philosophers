@@ -6,7 +6,7 @@
 /*   By: makpolat <makpolat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:08:42 by makpolat          #+#    #+#             */
-/*   Updated: 2025/06/28 16:34:43 by makpolat         ###   ########.fr       */
+/*   Updated: 2025/06/29 13:39:53 by makpolat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ void join_threads(t_data *data)
 
 int start_threads(t_data *data)
 {
+    pthread_t dead_check;
     int i;
 
     data->start_time = get_time();
@@ -76,7 +77,12 @@ int start_threads(t_data *data)
         {
             return(printf("Thread error\n"), 1);
         }
+        
         i++;
+    }
+    if (pthread_create(&dead_check, NULL, check_death, data) != 0)
+    {
+        return(printf("Thread error\n"), 1);
     }
     return (0);
 }
