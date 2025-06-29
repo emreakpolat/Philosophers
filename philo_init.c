@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init.c                                             :+:      :+:    :+:   */
+/*   philo_init.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: makpolat <makpolat@student.42.fr>          +#+  +:+       +#+        */
+/*   By: makpolat <makpolat@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 12:33:27 by makpolat          #+#    #+#             */
-/*   Updated: 2025/06/27 17:45:50 by makpolat         ###   ########.fr       */
+/*   Updated: 2025/06/29 16:22:54 by makpolat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,30 @@ int init_philosophers(t_data *philo)
     return (0);
 }
 
+void *check_death(void *arg)
+{
+    t_data *data = (t_data *)arg;
+    int i;
 
+    while (!data->someone_died) {
+        i = 0;
+        while (i < data->philo_count) {
+            pthread_mutex_lock(&data->philos[i].meal_lock);
+            if (get_time() - data->philos[i].last_meal_time > data->time_to_die) {
+                pthread_mutex_lock(&data->printf_lock);
+                printf("%ld Philosophers %d  dead\n", (get_time() - data->start_time), data->philos[i].id);
+                data->someone_died = 1;
+                pthread_mutex_unlock(&data->printf_lock);
+                pthread_mutex_unlock(&data->philos[i].meal_lock);
+                return (NULL);
+            }
+            pthread_mutex_unlock(&data->philos[i].meal_lock);
+            i++;
+        }
+        usleep(1000); // Süreyi artırarak thread senkronizasyonunu iyileştirin.
+    }
+    return (NULL);
+}
 
 size_t  ft_strlen(char *str)
 {
@@ -54,9 +77,6 @@ size_t  ft_strlen(char *str)
         i++;
     return (i); 
 }
-
-
-
 
 static int	char_check(const char *str)
 {

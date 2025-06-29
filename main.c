@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: makpolat <makpolat@student.42.fr>          +#+  +:+       +#+        */
+/*   By: makpolat <makpolat@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:08:42 by makpolat          #+#    #+#             */
-/*   Updated: 2025/06/29 13:39:53 by makpolat         ###   ########.fr       */
+/*   Updated: 2025/06/29 16:13:22 by makpolat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int philo_parse(int argc, char **argv, t_data *philo)
 {
     if(argc < 5 || argc > 6)
-        return(printf("Usage: ./philo filozof sayısı ölme_zamanı time_to_eat time_to_sleep [must_eat]\n"), 1);
+    return (printf("Usage: ./philo number_of_philosophers time_to_die time_to_eat time_to_sleep [number_of_times_each_philosopher_must_eat]\n"), 1);
     philo->philo_count = ft_atoi(argv[1]);
     philo->time_to_die = ft_atoi(argv[2]);
     philo->time_to_eat = ft_atoi(argv[3]);
