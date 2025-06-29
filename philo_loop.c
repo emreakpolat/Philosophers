@@ -6,16 +6,16 @@
 /*   By: makpolat <makpolat@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 14:16:42 by makpolat          #+#    #+#             */
-/*   Updated: 2025/06/29 16:44:09 by makpolat         ###   ########.fr       */
+/*   Updated: 2025/06/29 17:58:35 by makpolat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-static void philo_print(t_data *data, int id, const char *action)
+static void philo_print(t_data *data, int id, const char *str)
 {
     pthread_mutex_lock(&data->printf_lock);
-    printf("%ld Philosopher %d %s\n", get_time() - data->start_time, id, action);
+    printf("%ld Philosopher %d %s\n", get_time() - data->start_time, id, str);
     pthread_mutex_unlock(&data->printf_lock);
 }
 
@@ -64,30 +64,3 @@ void *philo_live(void *turn)
     return (NULL);
 }
 
-// void *check_death(void *arg)
-// {
-//     t_data *data = (t_data *)arg;
-//     int i;
-
-//     while (!data->someone_died)  
-//     {
-//         i = 0;
-//         while(i < data->philo_count)
-//         {
-//             pthread_mutex_lock(&data->philos[i].meal_lock);
-//             if (get_time() - data->philos[i].last_meal_time > data->time_to_die)
-//             {
-//                 pthread_mutex_lock(&data->printf_lock);
-//                 printf("%ld Philosophers %d  dead\n", (get_time() - data->start_time), data->philos[i].id);
-//                 data->someone_died = 1;
-//                 pthread_mutex_unlock(&data->printf_lock);
-//                 pthread_mutex_unlock(&data->philos[i].meal_lock);
-//                 return (NULL);
-//             }
-//             pthread_mutex_unlock(&data->philos[i].meal_lock);
-//             i++;
-//         }
-//         usleep(500);
-//     }
-//     return (NULL);
-// }

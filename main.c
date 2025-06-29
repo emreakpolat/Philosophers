@@ -6,7 +6,7 @@
 /*   By: makpolat <makpolat@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:08:42 by makpolat          #+#    #+#             */
-/*   Updated: 2025/06/29 16:13:22 by makpolat         ###   ########.fr       */
+/*   Updated: 2025/06/29 17:57:55 by makpolat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,13 +91,24 @@ int start_threads(t_data *data)
 int main(int argc, char **argv)
 {
     t_data *data;
+    
 
     data = (t_data *)malloc(sizeof(t_data));
+    if (philo_parse(argc, argv, data) != 0)
+        return (1);
+    if (data->philo_count == 1)
+    {
+        // Tek filozof senaryosu
+        printf("%ld Philosopher %d took left fork", get_time() - data->start_time, 1);
+        printf("%ld Philosopher %d is dead", get_time() - data->start_time, 1);
+        free(data);
+        return (1);
+    }
+
     if (!data)
         return (printf("Malloc error\n"), 1);
 
-    if (philo_parse(argc, argv, data) != 0)
-        return (1);
+
 
     if (create_mutex(data) == 1)
         return (1);
