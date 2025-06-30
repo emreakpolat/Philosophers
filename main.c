@@ -6,7 +6,7 @@
 /*   By: makpolat <makpolat@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:08:42 by makpolat          #+#    #+#             */
-/*   Updated: 2025/06/30 18:57:26 by makpolat         ###   ########.fr       */
+/*   Updated: 2025/06/30 21:00:48 by makpolat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ int start_threads(t_data *data)
     {
         return(printf("Thread error\n"), 1);
     }
+    pthread_detach(dead_check);
     return (0);
 }
 
@@ -102,6 +103,7 @@ static void free_function(t_data *data)
     pthread_mutex_destroy(data->philos->left_fork);
     pthread_mutex_destroy(data->philos->right_fork);
     pthread_mutex_destroy(&data->philos->meal_lock);
+    //pthread_mutex_destroy(&dead_check);
 
 }
 

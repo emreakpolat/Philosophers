@@ -6,7 +6,7 @@
 /*   By: makpolat <makpolat@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:08:34 by makpolat          #+#    #+#             */
-/*   Updated: 2025/06/30 18:29:36 by makpolat         ###   ########.fr       */
+/*   Updated: 2025/06/30 21:00:17 by makpolat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ typedef struct s_philo
 
 size_t  ft_strlen(char *str);
 long get_time(void);
-void *check_death(void *arg);
+void *check_death(void *arg);  
 int	ft_atoi(const char *str);
 int init_philosophers(t_data *philo);
 void *philo_live(void *turn);
