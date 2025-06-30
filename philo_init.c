@@ -6,7 +6,7 @@
 /*   By: makpolat <makpolat@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 12:33:27 by makpolat          #+#    #+#             */
-/*   Updated: 2025/06/29 16:22:54 by makpolat         ###   ########.fr       */
+/*   Updated: 2025/06/30 18:41:30 by makpolat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,14 +48,19 @@ void *check_death(void *arg)
     t_data *data = (t_data *)arg;
     int i;
 
-    while (!data->someone_died) {
+    while (!get_someone_died(data)) 
+    {
         i = 0;
-        while (i < data->philo_count) {
+        while (i < data->philo_count) 
+        {
             pthread_mutex_lock(&data->philos[i].meal_lock);
-            if (get_time() - data->philos[i].last_meal_time > data->time_to_die) {
+            if (get_time() - data->philos[i].last_meal_time > data->time_to_die) 
+            {
                 pthread_mutex_lock(&data->printf_lock);
-                printf("%ld Philosophers %d  dead\n", (get_time() - data->start_time), data->philos[i].id);
+                printf("%ld  %d  died\n", (get_time() - data->start_time), data->philos[i].id);
+                pthread_mutex_lock(&data->death_mutex);
                 data->someone_died = 1;
+                pthread_mutex_unlock(&data->death_mutex);
                 pthread_mutex_unlock(&data->printf_lock);
                 pthread_mutex_unlock(&data->philos[i].meal_lock);
                 return (NULL);

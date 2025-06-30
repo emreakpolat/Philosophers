@@ -6,7 +6,7 @@
 /*   By: makpolat <makpolat@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:08:42 by makpolat          #+#    #+#             */
-/*   Updated: 2025/06/29 17:57:55 by makpolat         ###   ########.fr       */
+/*   Updated: 2025/06/30 18:57:26 by makpolat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,14 @@ int philo_parse(int argc, char **argv, t_data *philo)
 
     if (philo->philo_count == -1 || philo->time_to_die == -1 || philo->time_to_eat == -1
         || philo->time_to_sleep == -1 || philo->meal_count == -1)
-    {
         return (1);
-    }
+    if (pthread_mutex_init(&philo->death_mutex, NULL) != 0)
+        return (printf("Mutex init error\n"), 1);
+    if (pthread_mutex_init(&philo->printf_lock, NULL) != 0)
+        return (printf("Mutex init error\n"), 1);
+    philo->someone_died = 0;
+    philo->forks = NULL;
+    philo->philos = NULL;
     return (0);
 }
 
@@ -77,7 +82,6 @@ int start_threads(t_data *data)
         {
             return(printf("Thread error\n"), 1);
         }
-        
         i++;
     }
     if (pthread_create(&dead_check, NULL, check_death, data) != 0)
@@ -85,6 +89,20 @@ int start_threads(t_data *data)
         return(printf("Thread error\n"), 1);
     }
     return (0);
+}
+
+static void free_function(t_data *data)
+{
+    //t_philo *philo;
+
+
+    pthread_mutex_destroy(&data->death_mutex);
+    pthread_mutex_destroy(&data->printf_lock);
+    pthread_mutex_destroy(data->forks);
+    pthread_mutex_destroy(data->philos->left_fork);
+    pthread_mutex_destroy(data->philos->right_fork);
+    pthread_mutex_destroy(&data->philos->meal_lock);
+
 }
 
 
@@ -118,6 +136,6 @@ int main(int argc, char **argv)
 
     start_threads(data);
     join_threads(data);
-
+    free_function(data);
     return (0);
 }

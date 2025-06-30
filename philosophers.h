@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: makpolat <makpolat@student.42.fr>          +#+  +:+       +#+        */
+/*   By: makpolat <makpolat@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:08:34 by makpolat          #+#    #+#             */
-/*   Updated: 2025/06/29 12:29:50 by makpolat         ###   ########.fr       */
+/*   Updated: 2025/06/30 18:29:36 by makpolat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ typedef struct s_data
 
     pthread_mutex_t *forks;
     pthread_mutex_t printf_lock;
+    pthread_mutex_t death_mutex;
 
     struct s_philo *philos;
 } t_data;
@@ -60,6 +61,6 @@ void *check_death(void *arg);
 int	ft_atoi(const char *str);
 int init_philosophers(t_data *philo);
 void *philo_live(void *turn);
-
+int     get_someone_died(t_data *data);
 
 #endif
