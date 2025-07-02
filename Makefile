@@ -1,10 +1,10 @@
 NAME=philo
 
-CC=  cc -Wall -Wextra -Werror -fsanitize=thread -g
+CC=  cc -Wall -Wextra -Werror
 
 SRC= main.c \
 	philo_loop.c \
-	philo_init.c
+	philo_utils.c
 
 OBJS = $(SRC:.c=.o)
 
