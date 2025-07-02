@@ -6,21 +6,11 @@
 /*   By: makpolat <makpolat@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 20:55:18 by makpolat          #+#    #+#             */
-/*   Updated: 2025/07/02 20:55:41 by makpolat         ###   ########.fr       */
+/*   Updated: 2025/07/02 22:08:29 by makpolat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
-
-size_t  ft_strlen(char *str)
-{
-    size_t  i;
-
-    i = 0;
-    while(str[i])
-        i++;
-    return (i); 
-}
 
 static int	char_check(const char *str)
 {

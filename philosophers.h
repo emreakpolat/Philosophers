@@ -6,7 +6,7 @@
 /*   By: makpolat <makpolat@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:08:34 by makpolat          #+#    #+#             */
-/*   Updated: 2025/07/02 20:59:28 by makpolat         ###   ########.fr       */
+/*   Updated: 2025/07/02 22:20:13 by makpolat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,13 @@ typedef struct  s_philo
     t_data *t_data;
 } t_philo;
 
-
+int	ft_atoi(const char *str);
 bool    get_end_flag(t_data *data);
 void    wait_function(t_data *data, long time);
 long    get_time(void);
 void    printf_function(char *str, t_philo *philo);
+void philo_state(t_philo *philo);
+void *philo_loop(void *arg);
+void *check_simulation(void *arg);
+void creat_thread(t_philo *philo);
 #endif
