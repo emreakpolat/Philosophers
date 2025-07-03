@@ -6,7 +6,7 @@
 /*   By: makpolat <makpolat@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 12:33:27 by makpolat          #+#    #+#             */
-/*   Updated: 2025/07/03 18:16:45 by makpolat         ###   ########.fr       */
+/*   Updated: 2025/07/03 21:50:38 by makpolat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,17 @@ void wait_function(t_data *data, long time)
         usleep(100);
     }
 }
-
+#include<string.h>
 void printf_function(char *str, t_philo *philo)
 {
-    if (get_end_flag(philo->t_data) == false)
+    if (strcmp(str, "is died") == 0)
+    {
+        pthread_mutex_lock(&philo->t_data->print);
+        printf("%ld %d %s\n",(get_time() - philo->t_data->start_time), philo->id, str);
+        pthread_mutex_unlock(&philo->t_data->print);
+        return ;
+    }
+    else if (get_end_flag(philo->t_data) == false)
     {
         return ;
     }

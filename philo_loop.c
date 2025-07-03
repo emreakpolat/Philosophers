@@ -6,7 +6,7 @@
 /*   By: makpolat <makpolat@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 14:16:42 by makpolat          #+#    #+#             */
-/*   Updated: 2025/07/03 18:50:06 by makpolat         ###   ########.fr       */
+/*   Updated: 2025/07/03 21:47:59 by makpolat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,13 @@
 
 void philo_state(t_philo *philo)
 {
-    if ((philo->id % 2) == 0 && get_end_flag(philo->t_data) == true)
+    if ((philo->id % 2) == 0)
     {
         pthread_mutex_lock(philo->left_fork);
         printf_function("has taken a fork", philo);
         pthread_mutex_lock(philo->right_fork);
         printf_function("has taken a fork", philo);
+        
     }
     else
     {
@@ -28,11 +29,12 @@ void philo_state(t_philo *philo)
         pthread_mutex_lock(philo->left_fork);
         printf_function("has taken a fork", philo);
     }
-    pthread_mutex_unlock(philo->right_fork);
-    pthread_mutex_unlock(philo->left_fork);
+
     printf_function("is eating", philo);
     wait_function(philo->t_data, philo->t_data->time_to_eat);
-    pthread_mutex_lock(&philo->meal_lock); 
+    pthread_mutex_unlock(philo->right_fork);
+    pthread_mutex_unlock(philo->left_fork);
+    pthread_mutex_lock(&philo->meal_lock);
     philo->meal_count++;
     philo->last_meal_time = get_time();
     pthread_mutex_unlock(&philo->meal_lock);
@@ -44,7 +46,8 @@ void philo_state(t_philo *philo)
 void *philo_loop(void *arg)
 {
     t_philo *philo = (t_philo *)arg;
-    while (get_end_flag(philo->t_data) == true)
+    
+    while (get_end_flag(philo->t_data))
     {
         philo_state(philo);
     }
@@ -61,11 +64,11 @@ void check_death(t_philo *philo)
         pthread_mutex_lock(&philo[i].meal_lock);
         if((get_time() - philo[i].last_meal_time) > philo->t_data->time_to_die)
         {
-            printf_function("is died", philo);
             pthread_mutex_unlock(&philo[i].meal_lock);
             pthread_mutex_lock(&philo->t_data->dead);
             philo->t_data->end_flag = false;
             pthread_mutex_unlock(&philo->t_data->dead);
+            printf_function("is died", &philo[i]);
             break ;
         }
         pthread_mutex_unlock(&philo[i].meal_lock);
@@ -85,15 +88,14 @@ void check_meals(t_philo *philo)
         pthread_mutex_lock(&philo[i].meal_lock);
         if (philo[i].meal_count >= philo->t_data->total_meal_count)
             count++;
-        if (count == philo->t_data->philo_count)
-        {
-            pthread_mutex_lock(&philo->t_data->dead);
-            philo->t_data->end_flag = false;
-            pthread_mutex_unlock(&philo->t_data->dead);
-            break;
-        }
         pthread_mutex_unlock(&philo[i].meal_lock);
         i++;
+    }
+    if (count == philo->t_data->philo_count)
+    {
+        pthread_mutex_lock(&philo->t_data->dead);
+        philo->t_data->end_flag = false;
+        pthread_mutex_unlock(&philo->t_data->dead);
     }
 }
 
