@@ -6,7 +6,7 @@
 /*   By: makpolat <makpolat@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:08:42 by makpolat          #+#    #+#             */
-/*   Updated: 2025/07/02 22:23:54 by makpolat         ###   ########.fr       */
+/*   Updated: 2025/07/03 15:53:45 by makpolat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static bool start_forks(t_data *data)
 static bool  init_data(int argc, char **argv, t_data *data)
 {
     if(argc < 5 || argc > 6)
-    return (printf("Usage: ./philo number_of_philosophers time_to_die time_to_eat time_to_sleep [number_of_times_each_philosopher_must_eat]\n"), 1);
+        return (printf("Usage: ./philo number_of_philosophers time_to_die time_to_eat time_to_sleep [number_of_times_each_philosopher_must_eat]\n"), false);
     data->philo_count = ft_atoi(argv[1]);
     data->time_to_die = ft_atoi(argv[2]);
     data->time_to_eat = ft_atoi(argv[3]);
@@ -57,18 +57,18 @@ static t_philo *philo_init(t_data *data)
 {
     t_philo *philo;
     int i;
-    philo = (t_philo *)malloc(sizeof(t_philo));
+    philo = (t_philo *)malloc(sizeof(t_philo) * data->philo_count);
     if (!philo)
-        return (NULL);
+        return (printf("Malloc error\n"), NULL);
     i = 0;
     while (i < data->philo_count)
     {
         philo[i].last_meal_time = get_time();
         philo[i].id = (i + 1);
-        if (pthread_mutex_init(&philo->meal_lock, NULL) != 0)
+        if (pthread_mutex_init(&philo[i].meal_lock, NULL) != 0)
             return (NULL);
-        philo[i].left_fork = data->forks[i];
-        philo[i].right_fork = data->forks[(i + 1) % data->philo_count];
+        philo[i].left_fork = &data->forks[i];
+        philo[i].right_fork = &data->forks[(i + 1) % data->philo_count];
         philo[i].t_data = data;
         philo[i].meal_count = 0;
         i++;
@@ -82,13 +82,14 @@ int main(int argc, char **argv)
     t_philo *philo;
 
     if (init_data(argc, argv, &data) == false)
-    return (1);
+        return (1);
     // printf("OOOOOOOO\n");
     philo = philo_init(&data);
     if (philo == NULL)
         return (1);
     creat_thread(philo);
-    philo_state(philo);
-    check_simulation(philo);
+    //philo_state(philo);
+    //check_simulation(philo);
+    pthread_join(data.check_simulation, NULL);
     return (0);
 }

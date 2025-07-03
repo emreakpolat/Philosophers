@@ -6,7 +6,7 @@
 /*   By: makpolat <makpolat@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:08:34 by makpolat          #+#    #+#             */
-/*   Updated: 2025/07/02 22:20:13 by makpolat         ###   ########.fr       */
+/*   Updated: 2025/07/03 15:50:10 by makpolat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@ typedef struct  s_philo
     long last_meal_time;
     pthread_t philo;
     pthread_mutex_t meal_lock;
-    pthread_mutex_t left_fork;
-    pthread_mutex_t right_fork;
+    pthread_mutex_t *left_fork;
+    pthread_mutex_t *right_fork;
     t_data *t_data;
 } t_philo;
 
