@@ -6,7 +6,7 @@
 /*   By: makpolat <makpolat@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 14:16:42 by makpolat          #+#    #+#             */
-/*   Updated: 2025/07/03 18:31:56 by makpolat         ###   ########.fr       */
+/*   Updated: 2025/07/03 18:47:50 by makpolat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ void philo_state(t_philo *philo)
     printf_function("is sleeping", philo);
     wait_function(philo->t_data, philo->t_data->time_to_sleep);
     printf_function("is thinking", philo);
+    
 }
 
 void *philo_loop(void *arg)
@@ -47,25 +48,25 @@ void *philo_loop(void *arg)
     while (get_end_flag(philo->t_data) == true)
     {
         philo_state(philo);
-        usleep(500);
     }
     return (NULL);
 }
 
 void check_death(t_philo *philo)
 {
-    int i = 0;
+    int i;
     
+    i = 0;
     while (i < philo->t_data->philo_count)
     {
         pthread_mutex_lock(&philo[i].meal_lock);
         if((get_time() - philo[i].last_meal_time) > philo->t_data->time_to_die)
         {
+            printf_function("is died", philo);
             pthread_mutex_unlock(&philo[i].meal_lock);
             pthread_mutex_lock(&philo->t_data->dead);
             philo->t_data->end_flag = false;
             pthread_mutex_unlock(&philo->t_data->dead);
-            printf_function("is died", philo);
             break ;
         }
         pthread_mutex_unlock(&philo[i].meal_lock);
@@ -84,9 +85,7 @@ void check_meals(t_philo *philo)
     {
         pthread_mutex_lock(&philo[i].meal_lock);
         if (philo[i].meal_count >= philo->t_data->total_meal_count)
-        {
             count++;
-        }
         if (count == philo->t_data->philo_count)
         {
             pthread_mutex_lock(&philo->t_data->dead);
