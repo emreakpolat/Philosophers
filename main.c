@@ -6,7 +6,7 @@
 /*   By: makpolat <makpolat@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:08:42 by makpolat          #+#    #+#             */
-/*   Updated: 2025/07/03 15:53:45 by makpolat         ###   ########.fr       */
+/*   Updated: 2025/07/03 18:27:53 by makpolat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,16 +80,26 @@ int main(int argc, char **argv)
 {
     t_data data;
     t_philo *philo;
+    int i = 0;
 
     if (init_data(argc, argv, &data) == false)
         return (1);
-    // printf("OOOOOOOO\n");
     philo = philo_init(&data);
     if (philo == NULL)
         return (1);
     creat_thread(philo);
-    //philo_state(philo);
-    //check_simulation(philo);
     pthread_join(data.check_simulation, NULL);
+
+    pthread_mutex_destroy(&data.dead);
+    pthread_mutex_destroy(&data.print);
+    while (i < data.philo_count)
+    {
+        pthread_mutex_destroy(&data.forks[i]);
+        pthread_mutex_destroy(&philo[i].meal_lock);
+        i++;
+    }
+    free(data.forks);
+    free(philo);
+    
     return (0);
 }

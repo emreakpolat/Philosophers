@@ -6,7 +6,7 @@
 /*   By: makpolat <makpolat@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 14:16:42 by makpolat          #+#    #+#             */
-/*   Updated: 2025/07/03 15:51:29 by makpolat         ###   ########.fr       */
+/*   Updated: 2025/07/03 18:31:56 by makpolat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ void *philo_loop(void *arg)
     return (NULL);
 }
 
-
 void check_death(t_philo *philo)
 {
     int i = 0;
@@ -66,7 +65,7 @@ void check_death(t_philo *philo)
             pthread_mutex_lock(&philo->t_data->dead);
             philo->t_data->end_flag = false;
             pthread_mutex_unlock(&philo->t_data->dead);
-            printf_function("is died", philo); // buraay dikkat
+            printf_function("is died", philo);
             break ;
         }
         pthread_mutex_unlock(&philo[i].meal_lock);
