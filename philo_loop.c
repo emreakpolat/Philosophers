@@ -6,7 +6,7 @@
 /*   By: makpolat <makpolat@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 14:16:42 by makpolat          #+#    #+#             */
-/*   Updated: 2025/07/03 18:47:50 by makpolat         ###   ########.fr       */
+/*   Updated: 2025/07/03 18:50:06 by makpolat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ void philo_state(t_philo *philo)
     printf_function("is sleeping", philo);
     wait_function(philo->t_data, philo->t_data->time_to_sleep);
     printf_function("is thinking", philo);
-    
 }
 
 void *philo_loop(void *arg)
