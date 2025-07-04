@@ -1,7 +1,6 @@
 NAME=philo
 
-CC=  cc -Wall -Wextra -Werror -fsanitize=thread 
-
+CC=  cc -Wall -Wextra -Werror -g
 SRC= main.c \
 	philo_loop.c \
 	philo_utils.c \

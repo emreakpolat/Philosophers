@@ -6,7 +6,7 @@
 /*   By: makpolat <makpolat@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 12:33:27 by makpolat          #+#    #+#             */
-/*   Updated: 2025/07/03 21:50:38 by makpolat         ###   ########.fr       */
+/*   Updated: 2025/07/04 17:32:52 by makpolat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ long get_time(void)
     struct timeval time;
 
     gettimeofday(&time, NULL);
-    return((time.tv_sec* 1000) + (time.tv_usec / 1000));
+    return((time.tv_sec * 1000) + (time.tv_usec / 1000));
 }
 
 void wait_function(t_data *data, long time)
@@ -32,23 +32,23 @@ void wait_function(t_data *data, long time)
         usleep(100);
     }
 }
-#include<string.h>
+
 void printf_function(char *str, t_philo *philo)
 {
-    if (strcmp(str, "is died") == 0)
+    if (ft_strcmp(str, "is died") == 0)
     {
+
         pthread_mutex_lock(&philo->t_data->print);
         printf("%ld %d %s\n",(get_time() - philo->t_data->start_time), philo->id, str);
         pthread_mutex_unlock(&philo->t_data->print);
         return ;
     }
-    else if (get_end_flag(philo->t_data) == false)
+    else if(get_end_flag(philo->t_data) == true)
     {
-        return ;
+        pthread_mutex_lock(&philo->t_data->print);
+        printf("%ld %d %s\n",(get_time() - philo->t_data->start_time), philo->id, str);
+        pthread_mutex_unlock(&philo->t_data->print);
     }
-    pthread_mutex_lock(&philo->t_data->print);
-    printf("%ld %d %s\n",(get_time() - philo->t_data->start_time), philo->id, str);
-    pthread_mutex_unlock(&philo->t_data->print);
 }
 
 

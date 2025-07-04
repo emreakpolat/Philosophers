@@ -6,7 +6,7 @@
 /*   By: makpolat <makpolat@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:08:34 by makpolat          #+#    #+#             */
-/*   Updated: 2025/07/03 18:58:28 by makpolat         ###   ########.fr       */
+/*   Updated: 2025/07/04 14:53:06 by makpolat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ typedef struct s_philo
 
 long	get_time(void);
 int		ft_atoi(const char *str);
+int		ft_strcmp(const char *s1, const char *s2);
 bool	get_end_flag(t_data *data);
 void	*philo_loop(void *arg);
 void	philo_state(t_philo *philo);

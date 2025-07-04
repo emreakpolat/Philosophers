@@ -6,7 +6,7 @@
 /*   By: makpolat <makpolat@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 20:55:18 by makpolat          #+#    #+#             */
-/*   Updated: 2025/07/02 22:08:29 by makpolat         ###   ########.fr       */
+/*   Updated: 2025/07/04 14:52:38 by makpolat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,16 @@ static int	char_check(const char *str)
         i++;
     }
     return (0);
+}
+
+int ft_strcmp(const char *s1, const char *s2)
+{
+	while (*s1 && *s2 && *s1 == *s2)
+	{
+		s1++;
+		s2++;
+	}
+	return ((unsigned char)*s1 - (unsigned char)*s2);
 }
 
 int	ft_atoi(const char *str)
