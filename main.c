@@ -6,7 +6,7 @@
 /*   By: makpolat <makpolat@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:08:42 by makpolat          #+#    #+#             */
-/*   Updated: 2025/07/05 14:40:00 by makpolat         ###   ########.fr       */
+/*   Updated: 2025/07/05 14:56:57 by makpolat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,17 +114,6 @@ int main(int argc, char **argv)
 	}
 	
 	creat_thread(philo);
-
-	pthread_mutex_destroy(&data.dead);
-	pthread_mutex_destroy(&data.print);
-	while (i < data.philo_count)
-	{
-		pthread_mutex_destroy(&data.forks[i]);
-		pthread_mutex_destroy(&philo[i].meal_lock);
-		i++;
-	}
-	free(data.forks);
-	free(philo);
-	
+	free_philo(philo, data);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: makpolat <makpolat@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:08:34 by makpolat          #+#    #+#             */
-/*   Updated: 2025/07/05 13:39:46 by makpolat         ###   ########.fr       */
+/*   Updated: 2025/07/05 14:57:22 by makpolat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,6 @@ void	philo_state(t_philo *philo);
 void	creat_thread(t_philo *philo);
 void	*check_simulation(void *arg);
 void	wait_function(t_data *data, long time);
+void	free_philo(t_philo *philo, t_data *data);
 void	printf_function(char *str, t_philo *philo);
-
 #endif
