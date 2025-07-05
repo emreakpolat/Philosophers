@@ -6,7 +6,7 @@
 /*   By: makpolat <makpolat@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:08:42 by makpolat          #+#    #+#             */
-/*   Updated: 2025/07/05 14:56:57 by makpolat         ###   ########.fr       */
+/*   Updated: 2025/07/05 15:44:20 by makpolat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static bool	init_data(int argc, char **argv, t_data *data)
 {
 	if (argc < 5 || argc > 6)
 	{
-		printf("Error\n./philo|philo_number die_time|eat_time sleep_time|philo_must_eat_time\n");
+		printf("./philo | number - hungry - eat_time - sleep_time - loop\n");
 		return (false);
 	}
 	data->philo_count = ft_atoi(argv[1]);
@@ -43,8 +43,9 @@ static bool	init_data(int argc, char **argv, t_data *data)
 	data->total_meal_count = -2;
 	if (argc == 6)
 		data->total_meal_count = ft_atoi(argv[5]);
-	if (data->philo_count == -1 || data->time_to_die == -1 || data->time_to_eat == -1
-		|| data->time_to_sleep == -1 || data->total_meal_count == -1)
+	if (data->philo_count == -1 || data->time_to_die == -1
+		|| data->time_to_eat == -1 || data->time_to_sleep == -1
+		|| data->total_meal_count == -1)
 		return (false);
 	data->start_time = get_time();
 	data->end_flag = true;
@@ -52,15 +53,16 @@ static bool	init_data(int argc, char **argv, t_data *data)
 		return (printf("Mutex error\n"), false);
 	if (pthread_mutex_init(&data->print, NULL) != 0)
 		return (printf("Mutex error\n"), false);
-	if(start_forks(data) != true)
+	if (start_forks(data) != true)
 		return (false);
 	return (true);
 }
 
-static t_philo *philo_init(t_data *data)
+static t_philo	*philo_init(t_data *data)
 {
-	t_philo *philo;
-	int i;
+	t_philo	*philo;
+	int		i;
+
 	philo = (t_philo *)malloc(sizeof(t_philo) * data->philo_count);
 	if (!philo)
 		return (printf("Malloc error\n"), NULL);
@@ -76,30 +78,28 @@ static t_philo *philo_init(t_data *data)
 		philo[i].t_data = data;
 		philo[i].meal_count = 0;
 		i++;
-	} 
+	}
 	return (philo);
 }
 
-void *one_philo(void *arg)
+void	*one_philo(void *arg)
 {
-    t_philo *philo = (t_philo *)arg;
+	t_philo	*philo;
 
-    printf("%ld %d has taken a fork\n",
-           (get_time() - philo->t_data->start_time), philo->id);
+	philo = (t_philo *)arg;
+	printf("%ld %d has taken a fork\n",
+		(get_time() - philo->t_data->start_time), philo->id);
 	wait_function(philo->t_data, philo->t_data->time_to_die);
-    printf("%ld %d is died\n",
-            (get_time() - philo->t_data->start_time), philo->id);
-	
-    return (NULL);
+	printf("%ld %d is died\n",
+		(get_time() - philo->t_data->start_time), philo->id);
+	return (NULL);
 }
 
-
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
-	t_data data;
-	t_philo *philo;
-	pthread_t one_philosopher;
-	int i = 0;
+	t_data		data;
+	t_philo		*philo;
+	pthread_t	one_philosopher;
 
 	if (init_data(argc, argv, &data) == false)
 		return (1);
@@ -110,10 +110,10 @@ int main(int argc, char **argv)
 	{
 		pthread_create(&one_philosopher, NULL, one_philo, philo);
 		pthread_join(one_philosopher, NULL);
+		free_philo(philo, &data);
 		return (0);
 	}
-	
 	creat_thread(philo);
-	free_philo(philo, data);
+	free_philo(philo, &data);
 	return (0);
 }
