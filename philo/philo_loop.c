@@ -6,7 +6,7 @@
 /*   By: makpolat <makpolat@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 14:16:42 by makpolat          #+#    #+#             */
-/*   Updated: 2025/07/05 16:34:00 by makpolat         ###   ########.fr       */
+/*   Updated: 2025/07/05 20:45:14 by makpolat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ static void	philo_state(t_philo *philo)
 	}
 	else
 	{
-		usleep(50);
 		pthread_mutex_lock(philo->right_fork);
 		printf_function("has taken a fork", philo);
 		pthread_mutex_lock(philo->left_fork);
@@ -39,11 +38,11 @@ static void	philo_eating(t_philo *philo)
 		pthread_mutex_unlock(philo->left_fork);
 		return ;
 	}
-	pthread_mutex_lock(&philo->meal_lock);
-	philo->last_meal_time = get_time();
 	printf_function("is eating", philo);
-	pthread_mutex_unlock(&philo->meal_lock);
+	pthread_mutex_lock(&philo->meal_lock);
 	wait_function(philo->t_data, philo->t_data->time_to_eat);
+	pthread_mutex_unlock(&philo->meal_lock);
+	philo->last_meal_time = get_time();
 	pthread_mutex_lock(&philo->meal_lock);
 	philo->meal_count++;
 	pthread_mutex_unlock(&philo->meal_lock);
