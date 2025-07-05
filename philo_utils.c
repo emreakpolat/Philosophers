@@ -6,7 +6,7 @@
 /*   By: makpolat <makpolat@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 12:33:27 by makpolat          #+#    #+#             */
-/*   Updated: 2025/07/04 17:32:52 by makpolat         ###   ########.fr       */
+/*   Updated: 2025/07/05 14:43:26 by makpolat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,4 +60,20 @@ bool    get_end_flag(t_data *data)
     temp = data->end_flag;
     pthread_mutex_unlock(&data->dead);
     return (temp);
+}
+void free_philo(t_philo *philo, t_data *data)
+{
+    int i;
+
+    i = 0;
+	pthread_mutex_destroy(&data->dead);
+	pthread_mutex_destroy(&data->print);
+	while (i < data->philo_count)
+	{
+		pthread_mutex_destroy(&data->forks[i]);
+		pthread_mutex_destroy(&philo[i].meal_lock);
+		i++;
+	}
+	free(data->forks);
+	free(philo);
 }

@@ -6,7 +6,7 @@
 /*   By: makpolat <makpolat@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 14:16:42 by makpolat          #+#    #+#             */
-/*   Updated: 2025/07/04 18:45:06 by makpolat         ###   ########.fr       */
+/*   Updated: 2025/07/05 14:48:21 by makpolat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void philo_state(t_philo *philo)
     }
     else
     {
-        usleep(100);
+        usleep(50);
         pthread_mutex_lock(philo->right_fork);
         printf_function("has taken a fork", philo);
         pthread_mutex_lock(philo->left_fork);
@@ -32,12 +32,6 @@ void philo_state(t_philo *philo)
     }
 
 
-}
-
-
-void one_philo(t_philo *philo)
-{
-    pthread_create(&philo->philo, NULL, philo_loop, philo);
 }
 
 static void philo_eating(t_philo *philo)

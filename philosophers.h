@@ -6,7 +6,7 @@
 /*   By: makpolat <makpolat@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:08:34 by makpolat          #+#    #+#             */
-/*   Updated: 2025/07/04 14:53:06 by makpolat         ###   ########.fr       */
+/*   Updated: 2025/07/05 13:39:46 by makpolat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,10 @@ int		ft_atoi(const char *str);
 int		ft_strcmp(const char *s1, const char *s2);
 bool	get_end_flag(t_data *data);
 void	*philo_loop(void *arg);
+void	*one_philo(void *arg);
 void	philo_state(t_philo *philo);
-void	*check_simulation(void *arg);
 void	creat_thread(t_philo *philo);
+void	*check_simulation(void *arg);
 void	wait_function(t_data *data, long time);
 void	printf_function(char *str, t_philo *philo);
 

@@ -6,7 +6,7 @@
 /*   By: makpolat <makpolat@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:08:42 by makpolat          #+#    #+#             */
-/*   Updated: 2025/07/04 17:32:03 by makpolat         ###   ########.fr       */
+/*   Updated: 2025/07/05 14:40:00 by makpolat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,43 +80,51 @@ static t_philo *philo_init(t_data *data)
 	return (philo);
 }
 
+void *one_philo(void *arg)
+{
+    t_philo *philo = (t_philo *)arg;
+
+    printf("%ld %d has taken a fork\n",
+           (get_time() - philo->t_data->start_time), philo->id);
+	wait_function(philo->t_data, philo->t_data->time_to_die);
+    printf("%ld %d is died\n",
+            (get_time() - philo->t_data->start_time), philo->id);
+	
+    return (NULL);
+}
+
+
 int main(int argc, char **argv)
 {
 	t_data data;
 	t_philo *philo;
-	//int i = 0;
+	pthread_t one_philosopher;
+	int i = 0;
 
 	if (init_data(argc, argv, &data) == false)
 		return (1);
 	philo = philo_init(&data);
 	if (philo == NULL)
 		return (1);
-	// if (data.philo_count == 1)
-	// {
-	// 	pthread_create(&data.check_simulation, NULL, &one_philo, (void *)&philo[0]);
-	// 	pthread_join(data.check_simulation, NULL);
-	// 	pthread_mutex_destroy(&data.dead);
-	// 	pthread_mutex_destroy(&data.print);
-	// 	pthread_mutex_destroy(&data.forks[0]);
-	// 	pthread_mutex_destroy(&philo[0].meal_lock);
-	// 	free(data.forks);
-	// 	free(philo);
-	// 	printf("%ld %d is died\n", (get_time() - data.start_time), philo[0].id);
-	// 	return (0);
-	// }
+	if (data.philo_count == 1)
+	{
+		pthread_create(&one_philosopher, NULL, one_philo, philo);
+		pthread_join(one_philosopher, NULL);
+		return (0);
+	}
 	
 	creat_thread(philo);
 
-	// pthread_mutex_destroy(&data.dead);
-	// pthread_mutex_destroy(&data.print);
-	// while (i < data.philo_count)
-	// {
-	// 	pthread_mutex_destroy(&data.forks[i]);
-	// 	pthread_mutex_destroy(&philo[i].meal_lock);
-	// 	i++;
-	// }
-	// free(data.forks);
-	// free(philo);
+	pthread_mutex_destroy(&data.dead);
+	pthread_mutex_destroy(&data.print);
+	while (i < data.philo_count)
+	{
+		pthread_mutex_destroy(&data.forks[i]);
+		pthread_mutex_destroy(&philo[i].meal_lock);
+		i++;
+	}
+	free(data.forks);
+	free(philo);
 	
 	return (0);
 }
