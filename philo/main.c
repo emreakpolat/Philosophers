@@ -6,7 +6,7 @@
 /*   By: makpolat <makpolat@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:08:42 by makpolat          #+#    #+#             */
-/*   Updated: 2025/07/06 14:46:32 by makpolat         ###   ########.fr       */
+/*   Updated: 2025/07/06 19:26:04 by makpolat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,6 @@ void	*one_philo(void *arg)
 	printf_function("has taken a fork", philo);
 	wait_function(philo->t_data, philo->t_data->time_to_die);
 	printf_function("is died", philo);
-
 	return (NULL);
 }
 

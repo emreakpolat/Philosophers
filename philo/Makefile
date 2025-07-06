@@ -1,6 +1,7 @@
 NAME=philo
 
-CC=  cc -Wall -Wextra -Werror -pthread
+CC=  cc -Wall -Wextra -Werror
+
 SRC= main.c \
 	philo_loop.c \
 	philo_utils.c \

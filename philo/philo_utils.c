@@ -6,7 +6,7 @@
 /*   By: makpolat <makpolat@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 12:33:27 by makpolat          #+#    #+#             */
-/*   Updated: 2025/07/06 14:50:16 by makpolat         ###   ########.fr       */
+/*   Updated: 2025/07/06 18:27:52 by makpolat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	wait_function(t_data *data, long time)
 	long	curr_time;
 
 	curr_time = get_time();
-	while (get_time() - curr_time <= time)
+	while ((get_time() - curr_time) < time)
 	{
 		if (get_end_flag(data) == false)
 			break ;
