@@ -6,7 +6,7 @@
 /*   By: makpolat <makpolat@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 20:55:18 by makpolat          #+#    #+#             */
-/*   Updated: 2025/07/06 18:53:25 by makpolat         ###   ########.fr       */
+/*   Updated: 2025/07/08 11:46:01 by makpolat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	check_death(t_philo *philo)
 			philo->t_data->end_flag = false;
 			pthread_mutex_unlock(&philo->t_data->dead);
 			pthread_mutex_unlock(&philo[i].meal_lock);
-			printf_function("is died", &philo[i]);
+			printf_function("died", &philo[i]);
 			return ;
 		}
 		pthread_mutex_unlock(&philo[i].meal_lock);
