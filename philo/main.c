@@ -6,7 +6,7 @@
 /*   By: makpolat <makpolat@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:08:42 by makpolat          #+#    #+#             */
-/*   Updated: 2025/07/08 11:46:13 by makpolat         ###   ########.fr       */
+/*   Updated: 2025/07/11 17:45:41 by makpolat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,10 @@ static bool	init_data(int argc, char **argv, t_data *data)
 	data->total_meal_count = -2;
 	if (argc == 6)
 		data->total_meal_count = ft_atoi(argv[5]);
-	if (data->philo_count == -1 || data->time_to_die == -1
-		|| data->time_to_eat == -1 || data->time_to_sleep == -1
-		|| data->total_meal_count == -1)
-		return (false);
+	if (data->philo_count == 0 || data->philo_count == 0 || data->time_to_die == 0
+		|| data->time_to_eat == 0 || data->time_to_sleep == 0
+		|| data->total_meal_count == 0)
+		return (printf("Wrong argument use integer\n"), false);
 	data->start_time = get_time();
 	data->end_flag = true;
 	if (pthread_mutex_init(&data->dead, NULL) != 0)

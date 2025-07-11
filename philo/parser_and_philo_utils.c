@@ -6,7 +6,7 @@
 /*   By: makpolat <makpolat@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 20:55:18 by makpolat          #+#    #+#             */
-/*   Updated: 2025/07/08 19:23:47 by makpolat         ###   ########.fr       */
+/*   Updated: 2025/07/11 18:01:44 by makpolat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,14 +49,14 @@ int	ft_atoi(const char *str)
 	while (*str == ' ' || (*str >= '\t' && *str <= '\r'))
 		str++;
 	if (*str == '-' || *str == '+' || k == 1)
-		return (printf("Wrong argument\n"), -1);
+		return (0);
 	while (*str >= '0' && *str <= '9')
 	{
 		if (*str == '-' || *str == '+')
-			return (printf("Wrong argument\n"), -1);
+			return (0);
 		k = k * 10 + (*str - 48);
 		if ((k > 2147483647) || (k < -2147483648))
-			return (printf("Wrong argument use integer\n"), -1);
+			return (0);
 		str++;
 	}
 	return (sign * k);
@@ -72,9 +72,6 @@ void	check_death(t_philo *philo)
 		pthread_mutex_lock(&philo[i].meal_lock);
 		if ((get_time() - philo[i].last_meal_time) > philo->t_data->time_to_die)
 		{
-			pthread_mutex_lock(&philo->t_data->dead);
-			philo->t_data->end_flag = false;
-			pthread_mutex_unlock(&philo->t_data->dead);
 			pthread_mutex_unlock(&philo[i].meal_lock);
 			printf_function("died", &philo[i]);
 			return ;
