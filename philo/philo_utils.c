@@ -6,7 +6,7 @@
 /*   By: makpolat <makpolat@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 12:33:27 by makpolat          #+#    #+#             */
-/*   Updated: 2025/07/11 17:59:01 by makpolat         ###   ########.fr       */
+/*   Updated: 2025/07/12 12:11:54 by makpolat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	wait_function(t_data *data, long time)
 
 void	printf_function(char *str, t_philo *philo)
 {
-		pthread_mutex_lock(&philo->t_data->print);
+	pthread_mutex_lock(&philo->t_data->print);
 	if (ft_strcmp(str, "died") == 0)
 	{
 		pthread_mutex_lock(&philo->t_data->dead);

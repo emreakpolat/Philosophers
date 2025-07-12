@@ -6,7 +6,7 @@
 /*   By: makpolat <makpolat@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:08:42 by makpolat          #+#    #+#             */
-/*   Updated: 2025/07/11 17:45:41 by makpolat         ###   ########.fr       */
+/*   Updated: 2025/07/12 12:01:59 by makpolat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static bool	init_data(int argc, char **argv, t_data *data)
 {
 	if (argc < 5 || argc > 6)
 	{
-		printf("./philo | number - hungry - eat_time - sleep_time - loop\n");
+		printf("./philo | number - hungry -eat_time - sleep_time - loop\n");
 		return (false);
 	}
 	data->philo_count = ft_atoi(argv[1]);
@@ -43,9 +43,9 @@ static bool	init_data(int argc, char **argv, t_data *data)
 	data->total_meal_count = -2;
 	if (argc == 6)
 		data->total_meal_count = ft_atoi(argv[5]);
-	if (data->philo_count == 0 || data->philo_count == 0 || data->time_to_die == 0
-		|| data->time_to_eat == 0 || data->time_to_sleep == 0
-		|| data->total_meal_count == 0)
+	if (data->philo_count == 0 || data->philo_count == 0
+		|| data->time_to_die == 0 || data->time_to_eat == 0
+		|| data->time_to_sleep == 0 || data->total_meal_count == 0)
 		return (printf("Wrong argument use integer\n"), false);
 	data->start_time = get_time();
 	data->end_flag = true;
